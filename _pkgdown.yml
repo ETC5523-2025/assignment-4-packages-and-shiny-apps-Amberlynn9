@@ -1,0 +1,42 @@
+# _pkgdown.yml
+
+template:
+  bootstrap: 5
+  bootswatch: flatly
+
+home:
+  title: "etc5523nhu"
+  description: "Explore the burden of healthcare-associated infections (HAIs) in Germany vs the EU/EEA using interactive tools."
+
+navbar:
+  structure:
+    left:
+      - home
+      - reference
+      - articles
+    right:
+      - github
+  components:
+    home:
+      text: "🏠 Home"
+      href: index.html
+    reference:
+      text: "📚 Reference"
+      href: reference/index.html
+    articles:
+      text: "📘 Vignettes"
+      href: articles/index.html
+    github:
+      icon: fab fa-github
+      href: "https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-Amberlynn9"
+
+articles:
+  - title: "Overview"
+    contents:
+      - overview
+
+reference:
+  - title: "Functions and Data"
+    contents:
+      - run_app
+      - hai_burden

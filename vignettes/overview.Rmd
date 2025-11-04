@@ -19,11 +19,13 @@ It was developed as part of **ETC5523 – Communicating with Data: Assignment 4*
 
 The dataset `hai_burden` is derived from Table 2 in Zacher et al. (2019) and contains point estimates and uncertainty intervals for:
 
--   HAIs per 100 000\
--   Attributable deaths per 100 000\
--   DALYs per 100 000
+-    **HAIs per 100,000:** Number of healthcare-associated infections per 100k population
 
-across five infection types (HAP, UTI, BSI, SSI, CDI) and three sampling groups (German PPS, German Convenience, ECDC EU/EEA).
+-    **Deaths per 100,000:** Attributable deaths due to HAIs per 100k population
+
+-    **DALYs per 100,000:** Disability-Adjusted Life Years lost due to infection
+
+It covers five infection types (**HAP, UTI, BSI, SSI, CDI**) and three sampling groups (**German PPS**, **German Convenience**, and **EU/EEA**).
 
 ```{r}
 library(etc5523nhu)
@@ -35,7 +37,7 @@ head(hai_burden)
 
 Launch the interactive dashboard with:
 
-```{r}
+```{r, eval=FALSE}
 run_app()
 ```
 

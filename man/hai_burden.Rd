@@ -3,30 +3,30 @@
 \docType{data}
 \name{hai_burden}
 \alias{hai_burden}
-\title{Healthcare-Associated Infection Burden (Germany and EU/EEA, 2011–2012)}
+\title{HAI Burden Data (Germany and EU/EEA)}
 \format{
-A tibble with 9 rows and 8 columns:
+A data frame with 90 rows and 6 variables:
 \describe{
-\item{Measure}{Type of burden measure ("HAIs_per_100k", "Deaths_per_100k", "DALYs_per_100k")}
-\item{Sample}{Sample type: "German_PPS", "German_convenience", or "EU_EEA"}
-\item{HAP}{Healthcare-associated pneumonia}
-\item{UTI}{Urinary tract infection}
-\item{BSI}{Primary bloodstream infection}
-\item{SSI}{Surgical site infection}
-\item{CDI}{Clostridioides difficile infection}
-\item{All}{All HAIs combined}
+\item{measure}{Type of burden measure (e.g. "HAIs per 100k", "Deaths per 100k", "DALYs per 100k")}
+\item{sample}{Sampling group: "German_PPS", "German_convenience", or "EU_EEA"}
+\item{infection}{Type of infection (HAP, UTI, BSI, SSI, CDI, or All)}
+\item{estimate}{Estimated value per 100,000 population}
+\item{ci_low}{Lower bound of uncertainty interval (simulated)}
+\item{ci_high}{Upper bound of uncertainty interval (simulated)}
 }
 }
 \source{
-Zacher B. et al. (2019). \emph{Application of a new methodology and R package reveals
-a high burden of healthcare-associated infections in Germany compared to the average in the EU/EEA,
-2011–2012.} EuroSurveillance, 24(46): 1900135.
+Zacher B. et al. (2019). \emph{EuroSurveillance, 24(46): 1900135}.
 }
 \usage{
 hai_burden
 }
 \description{
-This dataset contains the annual burden per 100,000 population of five types
-of healthcare-associated infections (HAIs) from Zacher et al. (2019).
+A dataset summarising the estimated burden of healthcare-associated infections
+(HAIs) in Germany and the EU/EEA, based on Zacher et al. (2019).
+}
+\examples{
+data("hai_burden")
+head(hai_burden)
 }
 \keyword{datasets}
