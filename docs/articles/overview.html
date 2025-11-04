@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Overview of the etc5523nhu Package • etc5523nhu</title>
+<title>Analysis of Healthcare-Associated Infections in Germany • etc5523nhu</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Overview of the etc5523nhu Package">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Analysis of Healthcare-Associated Infections in Germany">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -48,7 +48,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Overview of the etc5523nhu Package</h1>
+      <h1>Analysis of Healthcare-Associated Infections in Germany</h1>
             
       
 
@@ -60,130 +60,174 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The <strong>etc5523nhu</strong> package provides data and an
-interactive Shiny app for exploring the burden of healthcare-associated
-infections (HAIs) in Germany and the EU/EEA, based on <em>Zacher et
-al. (2019)</em>.</p>
-<p>It was developed as part of <strong>ETC5523 – Communicating with
-Data: Assignment 4</strong>.</p>
-<hr>
+<p>This vignette summarises the analysis from <em>Zacher et
+al. (2019)</em>, comparing the burden of healthcare-associated
+infections (HAIs) in Germany with the EU/EEA average.<br>
+The results show that Germany experiences a <strong>higher
+population-level burden</strong> despite lower hospital prevalence
+rates, due mainly to longer inpatient stays and higher admission
+numbers.</p>
 </div>
 <div class="section level2">
-<h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
+<h2 id="dataset">Dataset<a class="anchor" aria-label="anchor" href="#dataset"></a>
 </h2>
-<p>The dataset <code>hai_burden</code> was created from <em>Table 2 in
-Zacher et al. (2019)</em> using R.<br>
-It was first defined manually with <code><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tibble::tribble()</a></code> to
-include estimated values for each infection type and measure, then
-reshaped to long format using <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">tidyr::pivot_longer()</a></code>.</p>
-<p>I also added simulated uncertainty intervals (<code>ci_low</code> and
-<code>ci_high</code>) to make the plots more realistic and visually
-informative.</p>
-<p>Finally, the dataset was saved to the package with
-<code>usethis::use_data(hai_burden, overwrite = TRUE)</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>The dataset <code>hai_burden</code> is adapted from <em>Table 2</em>
+of Zacher et al. (2019), summarising the estimated burden of HAIs per
+100,000 population across infection types and sample groups.</p>
+<p>It includes three main measures:</p>
+<ul>
+<li><p><strong>HAIs per 100k</strong> : infection rate</p></li>
+<li><p><strong>Deaths per 100k</strong> : attributable
+mortality</p></li>
+<li><p><strong>DALYs per 100k</strong> : Disability-Adjusted Life Years
+(total health loss)</p></li>
+</ul>
+<pre><code>Each measure is reported for infection types (*HAP*, *UTI*, *BSI*, *SSI*, *CDI*, *All*) and three sample groups (*German_PPS*, *German_convenience*, *EU_EEA*).</code></pre>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">etc5523nhu</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hai_burden"</span><span class="op">)</span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hai_burden</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"Preview of the hai_burden dataset"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hai_burden</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"HAI burden dataset included in the package."</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<caption>Preview of the hai_burden dataset</caption>
-<colgroup>
-<col width="23%">
-<col width="27%">
-<col width="8%">
-<col width="8%">
-<col width="7%">
-<col width="8%">
-<col width="7%">
-<col width="8%">
-</colgroup>
+<caption>HAI burden dataset included in the package.</caption>
 <thead><tr class="header">
-<th align="left">Measure</th>
-<th align="left">Sample</th>
-<th align="right">HAP</th>
-<th align="right">UTI</th>
-<th align="right">BSI</th>
-<th align="right">SSI</th>
-<th align="right">CDI</th>
-<th align="right">All</th>
+<th align="left">measure</th>
+<th align="left">sample</th>
+<th align="left">infection</th>
+<th align="right">estimate</th>
+<th align="right">ci_low</th>
+<th align="right">ci_high</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">HAIs_per_100k</td>
+<td align="left">HAIs per 100k</td>
 <td align="left">German_PPS</td>
+<td align="left">HAP</td>
 <td align="right">132.0</td>
-<td align="right">265.1</td>
-<td align="right">33.4</td>
-<td align="right">115.4</td>
-<td align="right">44.6</td>
-<td align="right">592.1</td>
+<td align="right">115.99602</td>
+<td align="right">146.00451</td>
 </tr>
 <tr class="even">
-<td align="left">HAIs_per_100k</td>
-<td align="left">German_convenience</td>
-<td align="right">162.3</td>
-<td align="right">228.7</td>
-<td align="right">52.7</td>
-<td align="right">146.9</td>
-<td align="right">44.5</td>
-<td align="right">636.1</td>
-</tr>
-<tr class="odd">
-<td align="left">HAIs_per_100k</td>
-<td align="left">EU_EEA</td>
-<td align="right">143.7</td>
-<td align="right">174.7</td>
-<td align="right">22.2</td>
-<td align="right">111.3</td>
-<td align="right">16.0</td>
-<td align="right">467.9</td>
-</tr>
-<tr class="even">
-<td align="left">Deaths_per_100k</td>
+<td align="left">HAIs per 100k</td>
 <td align="left">German_PPS</td>
-<td align="right">4.9</td>
-<td align="right">4.5</td>
-<td align="right">4.8</td>
-<td align="right">2.9</td>
-<td align="right">2.4</td>
-<td align="right">20.1</td>
+<td align="left">UTI</td>
+<td align="right">265.1</td>
+<td align="right">246.23297</td>
+<td align="right">283.83015</td>
 </tr>
 <tr class="odd">
-<td align="left">Deaths_per_100k</td>
-<td align="left">German_convenience</td>
-<td align="right">6.1</td>
-<td align="right">3.9</td>
-<td align="right">7.9</td>
-<td align="right">3.7</td>
-<td align="right">2.5</td>
-<td align="right">24.4</td>
+<td align="left">HAIs per 100k</td>
+<td align="left">German_PPS</td>
+<td align="left">BSI</td>
+<td align="right">33.4</td>
+<td align="right">29.75598</td>
+<td align="right">35.49596</td>
 </tr>
 <tr class="even">
-<td align="left">Deaths_per_100k</td>
-<td align="left">EU_EEA</td>
-<td align="right">5.3</td>
-<td align="right">3.0</td>
-<td align="right">3.3</td>
-<td align="right">2.6</td>
-<td align="right">0.9</td>
-<td align="right">15.3</td>
+<td align="left">HAIs per 100k</td>
+<td align="left">German_PPS</td>
+<td align="left">SSI</td>
+<td align="right">115.4</td>
+<td align="right">108.28002</td>
+<td align="right">129.86317</td>
+</tr>
+<tr class="odd">
+<td align="left">HAIs per 100k</td>
+<td align="left">German_PPS</td>
+<td align="left">CDI</td>
+<td align="right">44.6</td>
+<td align="right">42.10448</td>
+<td align="right">50.82190</td>
+</tr>
+<tr class="even">
+<td align="left">HAIs per 100k</td>
+<td align="left">German_PPS</td>
+<td align="left">All</td>
+<td align="right">592.1</td>
+<td align="right">505.98240</td>
+<td align="right">643.87694</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="section level2">
+<h2 id="visual-summary">Visual Summary<a class="anchor" aria-label="anchor" href="#visual-summary"></a>
+</h2>
+<p>The plot below compares <strong>DALYs per 100,000</strong> across
+infection types and sample groups.<br></p>
+<p>It shows both the estimated burden and the uncertainty intervals,
+highlighting how Germany’s burden compares with the EU/EEA average.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">etc5523nhu</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load dataset safely</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hai_burden"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Filter for DALYs per 100k (only runs if column exists)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="st">"measure"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">hai_burden</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">dalys_data</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">hai_burden</span>, <span class="va">measure</span> <span class="op">==</span> <span class="st">"DALYs per 100k"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dalys_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">infection</span>, y <span class="op">=</span> <span class="va">estimate</span>, color <span class="op">=</span> <span class="va">sample</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html" class="external-link">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">ci_low</span>, ymax <span class="op">=</span> <span class="va">ci_high</span><span class="op">)</span>,</span>
+<span>                  width <span class="op">=</span> <span class="fl">0.3</span>, position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html" class="external-link">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>      title <span class="op">=</span> <span class="st">"DALYs per 100,000 Population by Infection Type"</span>,</span>
+<span>      subtitle <span class="op">=</span> <span class="st">"Comparing German samples and EU/EEA averages (Zacher et al., 2019)"</span>,</span>
+<span>      x <span class="op">=</span> <span class="st">"Infection Type"</span>,</span>
+<span>      y <span class="op">=</span> <span class="st">"Estimated DALYs per 100,000"</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"Sample Group"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#1B9E77"</span>, <span class="st">"#D95F02"</span>, <span class="st">"#7570B3"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>      plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span>, hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>      plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"gray40"</span><span class="op">)</span>,</span>
+<span>      legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
+<span>      axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">25</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"⚠️ Column 'measure' not found in hai_burden dataset."</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="figure">
+<img src="overview_files/figure-html/fig-1-1.png" alt="Estimated HAI burden per 100,000 population, Germany vs EU/EEA (2011–2012)" width="768"><p class="caption">
+Estimated HAI burden per 100,000 population, Germany vs EU/EEA
+(2011–2012)
+</p>
+</div>
+</div>
+<div class="section level2">
 <h2 id="the-shiny-app">The Shiny App<a class="anchor" aria-label="anchor" href="#the-shiny-app"></a>
 </h2>
-<p>Launch the interactive dashboard with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>You can launch the interactive dashboard using:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The app allows users to:</p>
 <ul>
-<li><p>Select infection types and compare metrics</p></li>
-<li><p>Explore differences between German and EU/EEA samples</p></li>
-<li><p>Interpret results through dynamic plots and explanatory
-text</p></li>
+<li><p>Select a <strong>measure</strong> (HAIs, deaths, or
+DALYs)</p></li>
+<li><p>Choose an <strong>infection type</strong></p></li>
+<li><p>Compare results between <strong>German</strong> and
+<strong>EU/EEA</strong> samples</p></li>
+<li><p><strong>Download</strong> the filtered data for further
+use</p></li>
 </ul>
+<p>It combines data filtering and dynamic visualisation, helping users
+explore how infection burden varies across regions and types.</p>
+</div>
+<div class="section level2">
+<h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
+</h2>
+<p>The <strong>etc5523nhu</strong> package brings the findings of
+<em>Zacher et al. (2019)</em> to life through both reproducible data and
+interactive analysis.<br>
+The dataset provides detailed infection metrics, while the Shiny app
+allows hands-on exploration, making it easier to understand how
+healthcare-associated infections impact Germany and Europe.</p>
+<p>Together, they demonstrate how R packages can make epidemiological
+data both transparent and engaging for users.</p>
 </div>
 <div class="section level2">
 <h2 id="reference">Reference<a class="anchor" aria-label="anchor" href="#reference"></a>

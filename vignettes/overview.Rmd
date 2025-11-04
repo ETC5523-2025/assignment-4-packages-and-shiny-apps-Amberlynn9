@@ -1,39 +1,91 @@
 ---
-title: "Overview of the etc5523nhu Package"
+title: "Analysis of Healthcare-Associated Infections in Germany"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Overview of the etc5523nhu Package}
+  %\VignetteIndexEntry{Analysis of Healthcare-Associated Infections in Germany}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 # Introduction
 
-The **etc5523nhu** package provides data and an interactive Shiny app for exploring the burden of healthcare-associated infections (HAIs) in Germany and the EU/EEA, based on *Zacher et al. (2019)*.
+This vignette summarises the analysis from *Zacher et al. (2019)*, comparing the burden of healthcare-associated infections (HAIs) in Germany with the EU/EEA average.\
+The results show that Germany experiences a **higher population-level burden** despite lower hospital prevalence rates, due mainly to longer inpatient stays and higher admission numbers.
 
-It was developed as part of **ETC5523 – Communicating with Data: Assignment 4**.
+# Dataset
 
-------------------------------------------------------------------------
+The dataset `hai_burden` is adapted from *Table 2* of Zacher et al. (2019), summarising the estimated burden of HAIs per 100,000 population across infection types and sample groups.
 
-# Data
+It includes three main measures:
 
-The dataset `hai_burden` was created from *Table 2 in Zacher et al. (2019)* using R.\
-It was first defined manually with `tibble::tribble()` to include estimated values for each infection type and measure, then reshaped to long format using `tidyr::pivot_longer()`.
+-    **HAIs per 100k** : infection rate
 
-I also added simulated uncertainty intervals (`ci_low` and `ci_high`) to make the plots more realistic and visually informative.
+-    **Deaths per 100k** : attributable mortality
 
-Finally, the dataset was saved to the package with `usethis::use_data(hai_burden, overwrite = TRUE)`.
+-    **DALYs per 100k** : Disability-Adjusted Life Years (total health loss)
+
+    Each measure is reported for infection types (*HAP*, *UTI*, *BSI*, *SSI*, *CDI*, *All*) and three sample groups (*German_PPS*, *German_convenience*, *EU_EEA*).
 
 ```{r}
 library(etc5523nhu)
 data("hai_burden")
-knitr::kable(head(hai_burden), caption = "Preview of the hai_burden dataset")
+knitr::kable(head(hai_burden), caption = "HAI burden dataset included in the package.")
 
 ```
 
+# Visual Summary
+
+The plot below compares **DALYs per 100,000** across infection types and sample groups.\
+
+It shows both the estimated burden and the uncertainty intervals, highlighting how Germany’s burden compares with the EU/EEA average.
+
+```{r, message=FALSE, warning=FALSE, fig.height=6, fig.width=8}
+#| label: fig-1
+#| fig-cap: "Estimated HAI burden per 100,000 population, Germany vs EU/EEA (2011–2012)"
+#| message: false
+#| warning: false
+#| code-fold: true
+library(etc5523nhu)
+library(ggplot2)
+library(dplyr)
+
+# Load dataset safely
+data("hai_burden")
+
+
+# Filter for DALYs per 100k (only runs if column exists)
+if ("measure" %in% names(hai_burden)) {
+  dalys_data <- dplyr::filter(hai_burden, measure == "DALYs per 100k")
+
+  ggplot(dalys_data, aes(x = infection, y = estimate, color = sample)) +
+    geom_point(size = 3, position = position_dodge(width = 0.6)) +
+    geom_errorbar(aes(ymin = ci_low, ymax = ci_high),
+                  width = 0.3, position = position_dodge(width = 0.6)) +
+    labs(
+      title = "DALYs per 100,000 Population by Infection Type",
+      subtitle = "Comparing German samples and EU/EEA averages (Zacher et al., 2019)",
+      x = "Infection Type",
+      y = "Estimated DALYs per 100,000",
+      color = "Sample Group"
+    ) +
+    scale_color_manual(values = c("#1B9E77", "#D95F02", "#7570B3")) +
+    theme_minimal(base_size = 14) +
+    theme(
+      plot.title = element_text(face = "bold", hjust = 0.5),
+      plot.subtitle = element_text(hjust = 0.5, color = "gray40"),
+      legend.position = "bottom",
+      axis.text.x = element_text(angle = 25, hjust = 1)
+    )
+} else {
+  message("⚠️ Column 'measure' not found in hai_burden dataset.")
+}
+```
+
+
+
 # The Shiny App
 
-Launch the interactive dashboard with:
+You can launch the interactive dashboard using:
 
 ```{r, eval=FALSE}
 run_app()
@@ -41,11 +93,22 @@ run_app()
 
 The app allows users to:
 
--   Select infection types and compare metrics
+-    Select a **measure** (HAIs, deaths, or DALYs)
 
--   Explore differences between German and EU/EEA samples
+-    Choose an **infection type**
 
--   Interpret results through dynamic plots and explanatory text
+-    Compare results between **German** and **EU/EEA** samples
+
+-    **Download** the filtered data for further use
+
+It combines data filtering and dynamic visualisation, helping users explore how infection burden varies across regions and types.
+
+# Conclusion
+
+The **etc5523nhu** package brings the findings of *Zacher et al. (2019)* to life through both reproducible data and interactive analysis.\
+The dataset provides detailed infection metrics, while the Shiny app allows hands-on exploration, making it easier to understand how healthcare-associated infections impact Germany and Europe.
+
+Together, they demonstrate how R packages can make epidemiological data both transparent and engaging for users.
 
 # Reference
 
