@@ -1,0 +1,20 @@
+---
+title: "Introduction to etc5523nhu"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to etc5523nhu}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Overview
+This vignette introduces the dataset and the Shiny app included in the package.
+
+## Loading the data
+
+```{r}
+library(etc5523nhu)
+data("hai_burden")
+head(hai_burden)
+```
+

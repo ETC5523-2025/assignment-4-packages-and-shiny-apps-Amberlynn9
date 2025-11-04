@@ -1,0 +1,17 @@
+Package: etc5523nhu
+Title: Communicating with Data - ETC5523 Assignment 4
+Version: 0.1.0
+Authors@R: 
+    person("Nhu", "Nguyen", , "nhu.nguyen@example.com", role = c("aut", "cre"))
+Description: An R package created for ETC5523 to explore and communicate data interactively using Shiny.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: 
+    R (>= 3.5)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
