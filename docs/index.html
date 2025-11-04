@@ -64,35 +64,46 @@ It was created as part of ETC5523 Assignment 4: <em>Turning Analysis Interactive
 <div class="section level2">
 <h2 id="bar_chart-dataset">📊 Dataset<a class="anchor" aria-label="anchor" href="#bar_chart-dataset"></a>
 </h2>
-<p>The package includes the dataset hai_burden, based on <em>Table 2</em> from Zacher et al. (2019), which reports the estimated annual burden of healthcare-associated infections (HAIs) per 100,000 population.</p>
-<p>You can load and explore it like this:</p>
+<p>The package contains the dataset hai_burden, derived from Table 2 of Zacher et al. (2019). It provides estimates of healthcare-associated infection burden per 100 000 population, including:</p>
+<ul>
+<li><p>HAIs per 100 000 – number of healthcare-associated infections</p></li>
+<li><p>Deaths per 100 000 – deaths attributable to HAIs</p></li>
+<li><p>DALYs per 100 000 – disability-adjusted life years combining illness and early death</p></li>
+</ul>
+<p>across five infection types (HAP, UTI, BSI, SSI, CDI) and three sampling groups (German PPS, German Convenience, ECDC EU/EEA).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hai_burden"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hai_burden</span><span class="op">)</span></span></code></pre></div>
-<p>The dataset includes measures such as:</p>
-<ul>
-<li><p>HAIs per 100,000</p></li>
-<li><p>Attributable deaths per 100,000</p></li>
-<li><p>DALYs per 100,000 across infection types (HAP, UTI, BSI, SSI, CDI) and samples (German PPS, German Convenience, ECDC EU/EEA).</p></li>
-</ul>
+<p>The dataset was generated using tibble::tribble() and reshaped with tidyr::pivot_longer(). Random confidence intervals (ci_low, ci_high) were added to visualise uncertainty. Finally, it was saved into the package using:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">use_data</a></span><span class="op">(</span><span class="va">hai_burden</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="computer-shiny-app">💻 Shiny App<a class="anchor" aria-label="anchor" href="#computer-shiny-app"></a>
 </h2>
 <p>You can launch the interactive dashboard using:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The app allows users to:</p>
 <ul>
-<li><p>Select infection types and compare metrics</p></li>
-<li><p>Explore differences between German PPS, German Convenience, and ECDC samples</p></li>
-<li><p>Interpret the results visually with clear descriptions and legends</p></li>
+<li><p>Select measures and infection types</p></li>
+<li><p>Compare German and EU/EEA estimates</p></li>
+<li><p>Download filtered data for further analysis</p></li>
+<li><p>Interpret dynamic plots with explanatory text</p></li>
 </ul>
+<p>Each bar in the chart represents the estimated infection burden per 100 000 people, with error bars showing uncertainty. This helps visualise differences between regions and infection types.</p>
 </div>
 <div class="section level2">
 <h2 id="globe_with_meridians-documentation-website">🌐 Documentation Website<a class="anchor" aria-label="anchor" href="#globe_with_meridians-documentation-website"></a>
 </h2>
-<p>Full function documentation, vignettes, and dataset details will be available through the pkgdown website (link to be added after publishing).</p>
+<p>You can view the full documentation and vignette here:</p>
+<p>👉 <a href="https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-Amberlynn9/index.html" class="external-link uri">https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-Amberlynn9/index.html</a></p>
+<p>It includes:</p>
+<ul>
+<li><p>Function documentation (run_app, hai_burden)</p></li>
+<li><p>A vignette explaining data creation and app features</p></li>
+<li><p>Package overview and source reference</p></li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="books-reference">📚 Reference<a class="anchor" aria-label="anchor" href="#books-reference"></a>
