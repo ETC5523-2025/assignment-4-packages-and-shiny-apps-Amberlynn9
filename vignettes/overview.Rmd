@@ -17,20 +17,18 @@ It was developed as part of **ETC5523 – Communicating with Data: Assignment 4*
 
 # Data
 
-The dataset `hai_burden` is derived from Table 2 in Zacher et al. (2019) and contains point estimates and uncertainty intervals for:
+The dataset `hai_burden` was created from *Table 2 in Zacher et al. (2019)* using R.\
+It was first defined manually with `tibble::tribble()` to include estimated values for each infection type and measure, then reshaped to long format using `tidyr::pivot_longer()`.
 
--    **HAIs per 100,000:** Number of healthcare-associated infections per 100k population
+I also added simulated uncertainty intervals (`ci_low` and `ci_high`) to make the plots more realistic and visually informative.
 
--    **Deaths per 100,000:** Attributable deaths due to HAIs per 100k population
-
--    **DALYs per 100,000:** Disability-Adjusted Life Years lost due to infection
-
-It covers five infection types (**HAP, UTI, BSI, SSI, CDI**) and three sampling groups (**German PPS**, **German Convenience**, and **EU/EEA**).
+Finally, the dataset was saved to the package with `usethis::use_data(hai_burden, overwrite = TRUE)`.
 
 ```{r}
 library(etc5523nhu)
 data("hai_burden")
-head(hai_burden)
+knitr::kable(head(hai_burden), caption = "Preview of the hai_burden dataset")
+
 ```
 
 # The Shiny App
