@@ -26,25 +26,29 @@ library(etc5523nhu)
 
 ## 📊 Dataset
 
-The package includes the dataset hai_burden, based on *Table 2* from
-Zacher et al. (2019), which reports the estimated annual burden of
-healthcare-associated infections (HAIs) per 100,000 population.
+The package contains the dataset hai_burden, derived from Table 2 of Zacher et al. (2019).
+It provides estimates of healthcare-associated infection burden per 100 000 population, including:
 
-You can load and explore it like this:
+- HAIs per 100 000 – number of healthcare-associated infections
+
+- Deaths per 100 000 – deaths attributable to HAIs
+
+- DALYs per 100 000 – disability-adjusted life years combining illness and early death
+
+across five infection types (HAP, UTI, BSI, SSI, CDI) and three sampling groups (German PPS, German Convenience, ECDC EU/EEA).
 
 ``` r
 data("hai_burden")
 head(hai_burden)
 ```
 
-The dataset includes measures such as:
+The dataset was generated using tibble::tribble() and reshaped with tidyr::pivot_longer().
+Random confidence intervals (ci_low, ci_high) were added to visualise uncertainty.
+Finally, it was saved into the package using:
+```r
+usethis::use_data(hai_burden, overwrite = TRUE)
 
--   HAIs per 100,000
-
--   Attributable deaths per 100,000
-
--   DALYs per 100,000 across infection types (HAP, UTI, BSI, SSI, CDI)
-    and samples (German PPS, German Convenience, ECDC EU/EEA).
+```
 
 ## 💻 Shiny App 
 
@@ -56,18 +60,30 @@ run_app()
 
 The app allows users to:
 
--   Select infection types and compare metrics
+- Select measures and infection types
 
--   Explore differences between German PPS, German Convenience, and ECDC
-    samples
+- Compare German and EU/EEA estimates
 
--   Interpret the results visually with clear descriptions and legends
+- Download filtered data for further analysis
+
+- Interpret dynamic plots with explanatory text
+
+Each bar in the chart represents the estimated infection burden per 100 000 people, with error bars showing uncertainty.
+This helps visualise differences between regions and infection types.
 
 ## 🌐 Documentation Website
+You can view the full documentation and vignette here:
 
-Full function documentation, vignettes, and dataset details will be
-available through the pkgdown website (link to be added after
-publishing).
+👉 https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-Amberlynn9/index.html
+
+It includes:
+
+- Function documentation (run_app, hai_burden)
+
+- A vignette explaining data creation and app features
+
+- Package overview and source reference
+
 
 ## 📚 Reference
 
