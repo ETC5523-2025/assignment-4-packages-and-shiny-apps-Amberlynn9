@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # etc5523nhu
 
 This R package contains data and a Shiny app for exploring the burden of
@@ -30,7 +24,7 @@ Then load it:
 library(etc5523nhu)
 ```
 
-📊 Dataset
+## 📊 Dataset
 
 The package includes the dataset hai_burden, based on *Table 2* from
 Zacher et al. (2019), which reports the estimated annual burden of
@@ -52,7 +46,9 @@ The dataset includes measures such as:
 -   DALYs per 100,000 across infection types (HAP, UTI, BSI, SSI, CDI)
     and samples (German PPS, German Convenience, ECDC EU/EEA).
 
-💻 Shiny App You can launch the interactive dashboard using:
+## 💻 Shiny App 
+
+You can launch the interactive dashboard using:
 
 ``` r
 run_app()
@@ -67,13 +63,13 @@ The app allows users to:
 
 -   Interpret the results visually with clear descriptions and legends
 
-🌐 Documentation Website
+## 🌐 Documentation Website
 
 Full function documentation, vignettes, and dataset details will be
 available through the pkgdown website (link to be added after
 publishing).
 
-📚 Reference
+## 📚 Reference
 
 Zacher B., Haller S., Willrich N., Walter J., Abu Sin M., Cassini A.,
 Plachouras D., Suetens C., & Eckmanns T. (2019). Application of a new
@@ -82,7 +78,7 @@ infections in Germany compared to the average in the EU/EEA, 2011–2012.
 EuroSurveillance, 24(46): 1900135.
 <https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2019.24.46.1900135>
 
-🪪 License
+## 🪪 License
 
 This package is released under the MIT License. See the LICENSE file for
 details.
