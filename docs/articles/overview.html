@@ -82,8 +82,11 @@ mortality</p></li>
 <li><p><strong>DALYs per 100k</strong> : Disability-Adjusted Life Years
 (total health loss)</p></li>
 </ul>
-<pre><code>Each measure is reported for infection types (*HAP*, *UTI*, *BSI*, *SSI*, *CDI*, *All*) and three sample groups (*German_PPS*, *German_convenience*, *EU_EEA*).</code></pre>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>Each measure is reported for infection types (<em>HAP</em>,
+<em>UTI</em>, <em>BSI</em>, <em>SSI</em>, <em>CDI</em>, <em>All</em>)
+and three sample groups (<em>German_PPS</em>,
+<em>German_convenience</em>, <em>EU_EEA</em>).</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">etc5523nhu</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"hai_burden"</span><span class="op">)</span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">hai_burden</span><span class="op">)</span>, caption <span class="op">=</span> <span class="st">"HAI burden dataset included in the package."</span><span class="op">)</span></span></code></pre></div>
@@ -156,7 +159,7 @@ mortality</p></li>
 infection types and sample groups.<br></p>
 <p>It shows both the estimated burden and the uncertainty intervals,
 highlighting how Germany’s burden compares with the EU/EEA average.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">etc5523nhu</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -202,7 +205,7 @@ Estimated HAI burden per 100,000 population, Germany vs EU/EEA
 <h2 id="the-shiny-app">The Shiny App<a class="anchor" aria-label="anchor" href="#the-shiny-app"></a>
 </h2>
 <p>You can launch the interactive dashboard using:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/run_app.html">run_app</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>The app allows users to:</p>
 <ul>

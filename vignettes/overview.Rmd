@@ -24,7 +24,7 @@ It includes three main measures:
 
 -    **DALYs per 100k** : Disability-Adjusted Life Years (total health loss)
 
-    Each measure is reported for infection types (*HAP*, *UTI*, *BSI*, *SSI*, *CDI*, *All*) and three sample groups (*German_PPS*, *German_convenience*, *EU_EEA*).
+Each measure is reported for infection types (*HAP*, *UTI*, *BSI*, *SSI*, *CDI*, *All*) and three sample groups (*German_PPS*, *German_convenience*, *EU_EEA*).
 
 ```{r}
 library(etc5523nhu)
