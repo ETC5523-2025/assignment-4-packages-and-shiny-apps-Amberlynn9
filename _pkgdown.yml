@@ -24,14 +24,14 @@ navbar:
       text: "📚 Reference"
       href: reference/index.html
     articles:
-      text: "📘 Vignettes"
+      text: "📘 Articles"
       href: articles/index.html
     github:
       icon: fab fa-github
       href: "https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-Amberlynn9"
 
 articles:
-  - title: "Vignettes"
+  - title: "Articles"
     contents:
       - overview
 
